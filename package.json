@@ -1,0 +1,14 @@
+{
+    "name": "node-express-api",
+    "version": "1.0.0",
+    "description": "A basic Node.js API using Express.js",
+    "main": "app.js",
+    "scripts": {
+      "start": "node app.js"
+    },
+    "author": "Sonia",
+    "license": "MIT",
+    "dependencies": {
+      "express": "^4.17.1"
+    }
+  }
