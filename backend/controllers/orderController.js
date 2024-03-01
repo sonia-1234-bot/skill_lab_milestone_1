@@ -53,3 +53,49 @@ exports.getOrdersByUserId = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+//4.
+// Controller for fetching orders by user ID
+exports.getOrdersByUserId = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const orders = await Order.find({ userId });
+    res.json(orders);
+  } catch (error) {
+    console.error('Error fetching orders by user ID:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const nodemailer = require('nodemailer');
+
+// Function to send OTP to user's email
+exports.sendOTP = async (req, res) => {
+  const { userId, userEmail } = req.body;
+  const otp = generateOTP(); // Implement this function to generate OTP
+  try {
+    // Send OTP to user's email
+    await sendEmail(userEmail, `Your OTP for order confirmation: ${otp}`);
+    res.status(200).json({ message: 'OTP sent successfully' });
+  } catch (error) {
+    console.error('Error sending OTP:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Function to send email
+async function sendEmail(to, message) {
+  // Implement nodemailer to send email
+}
+
+// Controller for updating the status of an order to 'delivered'
+exports.confirmOrderDelivery = async (req, res) => {
+  const { orderId } = req.params;
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(orderId, { status: 'delivered' }, { new: true });
+    res.json(updatedOrder);
+  } catch (error) {
+    console.error('Error updating order status:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
